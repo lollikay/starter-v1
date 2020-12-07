@@ -1,0 +1,15 @@
+doctype html
+html(lang="ru")
+  block head
+    head
+      meta(charset="utf-8")
+      title Blank site
+      meta(content="width=device-width, initial-scale=1" name="viewport")
+      link(rel="stylesheet" href="")
+  body
+    block header
+      include components/header
+    block content
+    block footer
+      include components/footer
+    block scripts(src='/main.js')
