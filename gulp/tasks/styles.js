@@ -1,36 +1,44 @@
 const gulp = require('gulp');
 const plumber = require('gulp-plumber');
 const sass = require('gulp-sass');
-const cleanCSS = require('gulp-clean-css');
+sass.compiler = require('node-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const autoprefixer = require('gulp-autoprefixer');
-const gulpStylelint = require('gulp-stylelint');
-const rename = require("gulp-rename");
+const rename = require('gulp-rename');
 
-module.exports = function styles() {
-  return gulp.src('src/assets/styles/*.scss')
+const apOptions = {
+  cascade: true
+};
+
+const sassDevOptions = {
+  errLogToConsole: true,
+  outputStyle: 'extended'
+};
+
+const sassOptions = {
+  errLogToConsole: true,
+  outputStyle: 'compressed'
+};
+
+const renameOptions = {
+  suffix: ".min"
+};
+
+exports.devstyles = function styles() {
+  return gulp.src('src/assets/styles/**.scss')
     .pipe(plumber())
-    .pipe(gulpStylelint({
-      failAfterError: false,
-      reporters: [
-        {
-          formatter: 'string',
-          console: true
-        }
-      ]
-    }))
     .pipe(sourcemaps.init())
-    .pipe(sass())
-    .pipe(autoprefixer({
-      cascade: false
-    }))
-    .pipe(cleanCSS({
-      debug: true,
-      compatibility: '*'
-    }, details => {
-      console.log(`${details.name}: Original size:${details.stats.originalSize} - Minified size: ${details.stats.minifiedSize}`)
-    }))
+    .pipe(sass(sassDevOptions).on('error', sass.logError))
+    .pipe(autoprefixer(apOptions))
     .pipe(sourcemaps.write())
-    .pipe(rename({ suffix: '.min' }))
-    .pipe(gulp.dest('build/assets/css'))
+    .pipe(gulp.dest('build/assets/css'));
+}
+
+exports.styles = function styles() {
+  return gulp.src('src/assets/styles/**.scss')
+    .pipe(plumber())
+    .pipe(sass(sassOptions).on('error', sass.logError))
+    .pipe(autoprefixer(apOptions))
+    .pipe(rename(renameOptions))
+    .pipe(gulp.dest('build/assets/css'));
 }

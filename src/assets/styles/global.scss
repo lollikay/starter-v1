@@ -1,0 +1,31 @@
+$font-family: "Helvetica", "Arial", sans-serif;
+$font-size: 1rem;
+
+$primary-color: blue;
+$secondary-color: darkviolet;
+$text-color: #333;
+$text-color-inverted: #fff;
+
+$base-padding: 2rem;
+
+$break-lg: 1024px;
+
+@mixin block-padding {
+  padding: $base-padding / 2;
+  @media (min-width: $break-lg) {
+    padding: $base-padding;
+  }
+}
+
+html {
+  font-size: $font-size;
+}
+
+body {
+  font-family: $font-family;
+  color: $text-color;
+}
+
+@import "components/header.scss";
+@import "components/footer.scss";
+@import "components/hero.scss";

@@ -1,22 +1,28 @@
-const gulp = require('gulp')
+const gulp = require('gulp');
 
-const serve = require('./gulp/tasks/serve')
-const pug2html = require('./gulp/tasks/pug2html')
-const styles = require('./gulp/tasks/styles')
-const scripts = require('./gulp/tasks/script')
-const clean = require('./gulp/tasks/clean')
-const copyDependencies = require('./gulp/tasks/copyDependencies')
+const { pug2html } = require('./gulp/tasks/pug2html.js');
+const { styles, devstyles } = require('./gulp/tasks/styles');
+const { scripts } = require('./gulp/tasks/scripts');
+const { clean } = require('./gulp/tasks/clean.js');
 
-function setMode(isProduction = false) {
-  return cb => {
-    process.env.NODE_ENV = isProduction ? 'production' : 'development'
-    cb()
-  }
-}
+const build = gulp.series(
+                clean,
+                gulp.parallel(
+                  pug2html, styles, scripts
+                )
+              );
 
-const dev = gulp.parallel(pug2html, styles, scripts)
+const dev = function() {
+  // gulp.watch('src/assets/styles/*.scss', devstyles);
+  // gulp.watch('src/templates/pages/*.pug', pug2html);
+  // gulp.watch('src/assets/js/*.pug', scripts);
+  gulp.series(
+    clean,
+    gulp.parallel(
+      pug2html, devstyles, scripts
+    )
+  );
+};
 
-const build = gulp.series(clean, copyDependencies, dev)
-
-module.exports.start = gulp.series(setMode(), build, serve)
-module.exports.build = gulp.series(setMode(true), build)
+exports.dev = dev;
+exports.build = build;

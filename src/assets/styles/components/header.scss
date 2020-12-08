@@ -1,0 +1,6 @@
+.header {
+  background-color: $primary-color;
+  color: $text-color-inverted;
+
+  @include block-padding;
+}

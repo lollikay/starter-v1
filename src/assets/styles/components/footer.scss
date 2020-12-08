@@ -1,0 +1,6 @@
+.footer {
+  background-color: $secondary-color;
+  color: $text-color-inverted;
+
+  @include block-padding;
+}

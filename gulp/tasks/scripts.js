@@ -5,8 +5,8 @@ const terser = require('gulp-terser')
 const rename = require('gulp-rename')
 const sourcemaps = require('gulp-sourcemaps')
 
-module.exports = function script() {
-  return gulp.src('src/assets/js/main.js')
+exports.scripts = function transform () {
+  return gulp.src('src/assets/js/*.js')
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(babel({presets: ['@babel/env']}))
