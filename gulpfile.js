@@ -12,17 +12,18 @@ const build = gulp.series(
                 )
               );
 
-const dev = function() {
-  // gulp.watch('src/assets/styles/*.scss', devstyles);
-  // gulp.watch('src/templates/pages/*.pug', pug2html);
-  // gulp.watch('src/assets/js/*.pug', scripts);
-  gulp.series(
-    clean,
-    gulp.parallel(
-      pug2html, devstyles, scripts
-    )
-  );
-};
+// const dev = function () {
+//   // gulp.watch('src/assets/styles/*.scss', devstyles);
+//   // gulp.watch('src/templates/pages/*.pug', pug2html);
+//   // gulp.watch('src/assets/js/*.pug', scripts);
+// };
+
+const dev = gulp.series(
+  clean,
+  gulp.parallel(
+    pug2html, devstyles, scripts
+  )
+);
 
 exports.dev = dev;
 exports.build = build;
