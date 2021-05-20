@@ -29,6 +29,6 @@
     "gulp-w3c-html-validator": "^2.0.1"
   },
   "browserslist": [
-    "since 2015"
+    "since 2014"
   ]
 }
